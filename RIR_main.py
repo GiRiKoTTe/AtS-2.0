@@ -183,7 +183,12 @@ def p_RIR_mainTM_weight(w):
       return quick_setup_main_max
     else:
       return (p_RIR_mainTM_last_set_RIR_target[w-1]) / quick_setup_RIR_main_single_at_8
-  if w >= 2 and w <= 21:
+  elif (w == 8) or (w == 15):
+    if p_RIR_mainTM_last_set_RIR_target[w-1] == "":
+      return p_RIR_mainTM_weight(w-1)
+    else:
+      return ((p_RIR_mainTM_last_set_RIR_target[w-1])/(quick_setup_main_single_at_8))
+  elif w >= 2 and w <= 21:
     if p_RIR_mainTM_last_set_RIR_target[w-1] == "":
       if p_RIR_main_sets_complete[w-2] == "":
         return p_RIR_mainTM_weight(w-1)

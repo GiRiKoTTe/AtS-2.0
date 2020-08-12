@@ -5,19 +5,19 @@ quick_setup_aux_rounding = 1
 quick_setup_aux_target_percent = [50.0,52.5,55.0,57.5,60.0,62.5,65.0,67.5,70.0,72.5,75.0,77.5,80.0,82.5,85.0,87.5,90.0,92.5,95.0,97.5,100.0
 ]
 
-#Aux
+#aux
 quick_setup_aux = "aux"
-quick_setup_aux_max = 350
+quick_setup_aux_max = 400
 quick_setup_aux_single_at_8 = 90
 quick_setup_aux_behavior_RIR_sets = [5]*21
-quick_setup_aux_behavior_RIR_adjust =  [-5,-2,0,.5,1,1.5,2,3]
-quick_setup_aux_rep_target =   [8,8,8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1,1,1,1]
-quick_setup_aux_last_set_RIR_target =  [3,3,3,3,3,3,3,3,3,3,2,2,2,2,1,1,1,1,1,0,0]
-quick_setup_aux_intensity =    [60.0,65.0,70.0,62.5,67.5,72.5,50.0,65.0,70.0,75.0,67.5,72.5,77.5,50.0,70.0,75.0,80.0,75.0,80.0,85.0,50.0]
+quick_setup_aux_behavior_RIR_adjust =      [-5,-2,0,.5,1,1.5,2,3]
+quick_setup_aux_rep_target =       [8,8,8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1,1,1,1]
+quick_setup_aux_last_set_RIR_target =      [3,3,3,3,3,3,3,3,3,3,2,2,2,2,1,1,1,1,1,0,0]
+quick_setup_aux_intensity =        [70.0,75.0,80.0,72.5,77.5,82.5,60.0,75.0,80.0,85.0,77.5,82.5,87.5,60.0,80.0,85.0,90.0,85.0,90.0,95.0,60.0]
 
 ##############################______Setup______##############################
 
-#Aux
+#aux
 
 setup_aux_intensity = quick_setup_aux_intensity
 setup_aux_sets = quick_setup_aux_behavior_RIR_sets
@@ -121,13 +121,15 @@ def setup_aux_last_set_RIR (w):
 
 ##############################______Untouched______##############################
 
+##############################aux########################
+
 ####auxTM####
 untouched_auxTM_last_set_RIR_target = [""]*21
 untouched_auxTM_sets_completed = [""]*21
 untouched_auxTM_reps_per_set = ["single@8"]*21
 untouched_auxTM_set_goal = [""]*21
 untouched_auxTM_RIR_on_last_set = [""]
-def untouched_TM_weight(w):
+def untouched_auxTM_weight(w):
   if w==1:
     if untouched_auxTM_last_set_RIR_target[w-1] == "":
       return quick_setup_aux_max
@@ -160,7 +162,8 @@ def untouched_TM_weight(w):
     else:
       return (untouched_auxTM_last_set_RIR_target[w-1])/(quick_setup_aux_single_at_8)
 
-####aux####
+#####aux#####
+
 untouched_aux_reps_per_set = setup_aux_reps_per_set
 untouched_aux_last_set_RIR_target = setup_aux_last_set_RIR
 untouched_aux_set_goal = setup_aux_sets
@@ -180,7 +183,12 @@ def p_RIR_auxTM_weight(w):
       return quick_setup_aux_max
     else:
       return (p_RIR_auxTM_last_set_RIR_target[w-1]) / quick_setup_RIR_aux_single_at_8
-  if w >= 2 and w <= 21:
+  elif (w == 8) or (w == 15):
+    if p_RIR_auxTM_last_set_RIR_target[w-1] == "":
+      return p_RIR_auxTM_weight(w-1)
+    else:
+      return ((p_RIR_auxTM_last_set_RIR_target[w-1])/(quick_setup_aux_single_at_8))
+  elif w >= 2 and w <= 21:
     if p_RIR_auxTM_last_set_RIR_target[w-1] == "":
       if p_RIR_aux_sets_complete[w-2] == "":
         return p_RIR_auxTM_weight(w-1)
@@ -220,6 +228,7 @@ p_RIR_aux_sets_completed = []
 p_RIR_aux_RIR_on_last_set = []
 
 ###########################_______Table______####################################################
+
 def table_aux(w): 
-  return [p_RIR_aux_weight(1),p_RIR_aux_reps_per_set(w),p_RIR_aux_last_set_RIR_target(w),p_RIR_aux_set_goal(w)]
+  return [p_RIR_aux_weight(w),p_RIR_aux_reps_per_set(w),p_RIR_aux_last_set_RIR_target(w),p_RIR_aux_set_goal(w)]
 #####################################################################################################################
