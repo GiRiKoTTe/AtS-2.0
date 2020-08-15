@@ -1,14 +1,17 @@
+##############################_______Math_Def########################################
+def x_round(number, rounding):
+        return round(number * (1/rounding)) / (1/rounding)
 ##############################_______Quick Setup_______##############################
 
-quick_setup_main_rounding = 1
+quick_setup_main_rounding = .25
 
 quick_setup_main_target_percent = [50.0,52.5,55.0,57.5,60.0,62.5,65.0,67.5,70.0,72.5,75.0,77.5,80.0,82.5,85.0,87.5,90.0,92.5,95.0,97.5,100.0
 ]
 
 #Main
 quick_setup_main = "main"
-quick_setup_main_max = 400
-quick_setup_main_single_at_8 = 90
+quick_setup_main_max = 490.0
+quick_setup_main_single_at_8 = 90.0
 quick_setup_main_behavior_RIR_sets = [5]*21
 quick_setup_main_behavior_RIR_adjust =      [-5,-2,0,.5,1,1.5,2,3]
 quick_setup_main_rep_target =       [8,8,8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1,1,1,1]
@@ -170,7 +173,7 @@ untouched_main_set_goal = setup_main_sets
 untouched_main_sets_completed = ""
 untouched_main_RIR_on_last_set = ""
 def untouched_main_weight(w):
-  return (round(((untouched_mainTM_weight(w))*(quick_setup_main_intensity[w-1])),quick_setup_main_rounding))/100
+  return (x_round(((untouched_mainTM_weight(w))*(quick_setup_main_intensity[w-1])),quick_setup_main_rounding))/100.0
 
 ############################______p_RIR______##############################
 
@@ -190,7 +193,7 @@ def p_RIR_mainTM_weight(w):
       return ((p_RIR_mainTM_last_set_RIR_target[w-1])/(quick_setup_main_single_at_8))
   elif w >= 2 and w <= 21:
     if p_RIR_mainTM_last_set_RIR_target[w-1] == "":
-      if p_RIR_main_sets_complete[w-2] == "":
+      if p_RIR_main_sets_completed[w-2] == "":
         return p_RIR_mainTM_weight(w-1)
       elif ((p_RIR_main_sets_completed[w-2]) - (p_RIR_main_set_goal[w-2])) < -1.9:
         return ((p_RIR_mainTM_weight(w-1)) * (1 + setup_RIR_main_behavior_RIR_adjust[0]))
@@ -218,17 +221,22 @@ def p_RIR_mainTM_weight(w):
 ####main####
 
 def p_RIR_main_weight(w):
-  return (round(((p_RIR_mainTM_weight(w)) * (setup_main_intensity[w-1])), quick_setup_main_rounding))/100
+  return (x_round(((p_RIR_mainTM_weight(w)) * (setup_main_intensity[w-1])), quick_setup_main_rounding))/100.0
+  
 p_RIR_main_reps_per_set = setup_main_reps_per_set
 def p_RIR_main_last_set_RIR_target(w):
   return setup_main_last_set_RIR(w)
 def p_RIR_main_set_goal(w):
   return setup_main_sets[w-1]
-p_RIR_main_sets_completed = []
-p_RIR_main_RIR_on_last_set = []
+p_RIR_main_sets_completed = [""]*21
+p_RIR_main_RIR_on_last_set = [""]*21
 
 ###########################_______Table______####################################################
 
 def table_main(w): 
   return [p_RIR_main_weight(w),p_RIR_main_reps_per_set(w),p_RIR_main_last_set_RIR_target(w),p_RIR_main_set_goal(w)]
 #####################################################################################################################
+print (p_RIR_main_weight(8))
+print (p_RIR_main_reps_per_set(8))
+print (p_RIR_main_last_set_RIR_target(8))
+print (p_RIR_main_set_goal(8))
