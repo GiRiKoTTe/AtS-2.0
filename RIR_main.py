@@ -1,6 +1,6 @@
-##############################_______Math_Def########################################
+##############################_______Math_Def________################################
 def x_round(number, rounding):
-        return round(number * (1/rounding)) / (1/rounding)
+      return round(number * (1/rounding)) / (1/rounding)
 ##############################_______Quick Setup_______##############################
 
 quick_setup_main_rounding = .25
@@ -232,11 +232,10 @@ p_RIR_main_sets_completed = [""]*21
 p_RIR_main_RIR_on_last_set = [""]*21
 
 ###########################_______Table______####################################################
-
 def table_main(w): 
-  return [p_RIR_main_weight(w),p_RIR_main_reps_per_set(w),p_RIR_main_last_set_RIR_target(w),p_RIR_main_set_goal(w)]
+  return ("Week:"+str(w)+"  |  weight:"+str((p_RIR_main_weight(w))) + "  |  reps per set:"+str((p_RIR_main_reps_per_set(w)))+"  |  Last Set RIR Target:"+str(p_RIR_main_last_set_RIR_target(w))+"  |  Set Goal:"+str(p_RIR_main_set_goal(w)))
 #####################################################################################################################
-print (p_RIR_main_weight(8))
-print (p_RIR_main_reps_per_set(8))
-print (p_RIR_main_last_set_RIR_target(8))
-print (p_RIR_main_set_goal(8))
+def table_main_all(w):
+  for n in range(1,22):
+    print (table_main(n))
+print(table_main_all(0))
