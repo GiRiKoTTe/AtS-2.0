@@ -1,6 +1,6 @@
-##############################_______Math_Def########################################
+##############################_______Math_Def________################################
 def x_round(number, rounding):
-        return round(number * (1/rounding)) / (1/rounding)
+      return round(number * (1/rounding)) / (1/rounding)
 ##############################_______Quick Setup_______##############################
 
 quick_setup_aux_rounding = .25
@@ -229,9 +229,9 @@ p_RIR_aux_RIR_on_last_set = [""]*21
 
 ###########################_______Table______####################################################
 def table_aux(w): 
-  return [p_RIR_aux_weight(1),p_RIR_aux_reps_per_set(w),p_RIR_aux_last_set_RIR_target(w),p_RIR_aux_set_goal(w)]
+  return ("Week:"+str(w)+"  |  weight:"+str((p_RIR_aux_weight(w))) + "  |  reps per set:"+str((p_RIR_aux_reps_per_set(w)))+"  |  Last Set RIR Target:"+str(p_RIR_aux_last_set_RIR_target(w))+"  |  Set Goal:"+str(p_RIR_aux_set_goal(w)))
 #####################################################################################################################
-print (p_RIR_aux_weight(2))
-print (p_RIR_aux_reps_per_set(2))
-print (p_RIR_aux_last_set_RIR_target(2))
-print (p_RIR_aux_set_goal(2))
+def table_aux_all(w):
+  for n in range(1,22):
+    print (table_aux(n))
+print(table_aux_all(0))
