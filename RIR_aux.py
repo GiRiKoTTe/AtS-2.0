@@ -20,20 +20,14 @@ setup_aux_intensity = quick_setup_aux_intensity
 setup_aux_sets = quick_setup_aux_behavior_RIR_sets
 setup_aux_behavior_RIR_adjust = quick_setup_aux_behavior_RIR_adjust
 def setup_aux_reps_per_set (w):
-  if w == 7 or w == 14 or w == 21:
-    return 5
-  else:
-    for n in range (0,22):
+  for n in range (0,22):
       if quick_setup_aux_intensity[w-1] == quick_setup_aux_target_percent[n]:
         return quick_setup_aux_rep_target[n]
         break
       else:
        n=+1
 def setup_aux_last_set_RIR (w):
-  if w == 7 or w == 14 or w == 21:
-    return a
-  else:
-    for n in range (0,22):
+  for n in range (0,22):
         if setup_aux_intensity[w-1] == quick_setup_aux_target_percent[n]:
             return quick_setup_aux_last_set_RIR_target[n]
             break 
@@ -133,9 +127,15 @@ def p_RIR_auxTM_weight(w):
 def p_RIR_aux_weight(w):
   return (x_round(((p_RIR_auxTM_weight(w)) * (setup_aux_intensity[w-1]))))
 def p_RIR_aux_reps_per_set(w):
+  if w == 7 or w == 14 or w == 21:
+    return 5
+  else:
     return setup_aux_reps_per_set(w)
 def p_RIR_aux_last_set_RIR_target(w):
-  return setup_aux_last_set_RIR(w)
+  if w == 7 or w == 14 or w == 21:
+    return a
+  else:
+    return setup_aux_last_set_RIR(w)
 def p_RIR_aux_set_goal(w):
   return setup_aux_sets[w-1]
 p_RIR_aux_sets_completed = [a]*21
